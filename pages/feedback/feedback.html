@@ -16,21 +16,21 @@
     <div class="navFlex">
         <div class="navbar">
             <span class="icon icon-left"><a href="../outcome/outcome.html">
-              <img src="../../dock/back.png">
-            </a>
+                    <img src="../../dock/back.png">
+                </a>
             </span>
             <span class="icon icon-group"><img src="../../dock/community.png"></span>
-            
+
             <span class="icon icon-home"><a href="../../index.html">
-              <img src="../../dock/home.png">
-              </a>
+                    <img src="../../dock/home.png">
+                </a>
             </span>
-            
+
             <span class="icon icon-menu"><img src="../../dock/options.png"></span>
         </div>
-    
+    </div>
 
-    <div class="container margin-bottom-md">
+    <div class="container">
         <div class="feedback-wrapper margin-top-md">
             <h2 class="large-heading font-default-offwhite">Do you think the result is accurate?</h2>
             <img class="feedbackImage margin-top-md" src="/assets/outcome/Hemileia Vastatrix.png">
@@ -40,40 +40,43 @@
             <div class="button-wrapper margin-top-xl">
                 <button onclick="feedbackAlert()" class="btn-offwhite margin-top-sm">Not the right disease</button>
                 <button onclick="feedbackAlert()" class="btn-offwhite margin-top-sm">Not te right description</button>
-                <button onclick="window.location.href='/pages/chat/chat.html'" class="btn-offwhite margin-top-sm">Others</button>
+                <button onclick="window.location.href='/pages/chat/chat.html'"
+                    class="btn-offwhite margin-top-sm">Others</button>
             </div>
         </div>
+    </div>
+    <div class="spacingDiv"></div>
 
-        <script>
-            function feedbackAlert() {
-                alert("Thanks for your feedback!");
+    <script>
+        function feedbackAlert() {
+            alert("Thanks for your feedback!");
+        }
+
+
+        document.addEventListener("DOMContentLoaded", function () {
+            // Retrieve predictedClass from local storage
+            const predictedClass = localStorage.getItem('predictedClass');
+
+            // Update the text in the h2 element
+            const h2Element = document.getElementById('disease');
+            if (h2Element && predictedClass) {
+                h2Element.textContent = predictedClass;
+            } else {
+                console.error('Failed to update h2 text: predictedClass not found in local storage or h2 element not found.');
             }
 
+            // Retrieve description from local storage
+            const description = localStorage.getItem('description');
 
-            document.addEventListener("DOMContentLoaded", function () {
-                // Retrieve predictedClass from local storage
-                const predictedClass = localStorage.getItem('predictedClass');
-
-                // Update the text in the h2 element
-                const h2Element = document.getElementById('disease');
-                if (h2Element && predictedClass) {
-                    h2Element.textContent = predictedClass;
-                } else {
-                    console.error('Failed to update h2 text: predictedClass not found in local storage or h2 element not found.');
-                }
-
-                // Retrieve description from local storage
-                const description = localStorage.getItem('description');
-
-                // Update the text in the p element
-                const pElement = document.getElementById('description');
-                if (pElement && description) {
-                    pElement.textContent = description;
-                } else {
-                    console.error('Failed to update h2 text: predictedClass not found in local storage or h2 element not found.');
-                }
-            });
-        </script>
+            // Update the text in the p element
+            const pElement = document.getElementById('description');
+            if (pElement && description) {
+                pElement.textContent = description;
+            } else {
+                console.error('Failed to update h2 text: predictedClass not found in local storage or h2 element not found.');
+            }
+        });
+    </script>
 </body>
 
 </html>

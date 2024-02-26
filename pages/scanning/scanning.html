@@ -14,138 +14,139 @@
 </head>
 
 <body>
-     
-    
+
+
     <div class="navFlex margin-top-sm">
         <div class="camBar">
             <span class="icon icon-left"><a href="../../index.html"><img src="../../assets/general/No.png">
-            </a>
+                </a>
             </span>
             <span class="icon icon-group"><img src="../../assets/general/noflash.png"></span>
             <span class="icon icon-home"><img src="../../assets/general/qu.png"></span>
-    </div>            
-
-    <div class="container scanning_content margin-bottom-md">
-        <!-- <h2 class="font-default-offwhite large-heading margin-top-xl">HAT OR NOT???</h2> -->
-
-        <video class="video margin-top-xl" id="video" autoplay playsinline></video>
-        <button class="changeCamera" onclick="switchCamera()">Switch Camera</button>
-        <button class="startPredict font-default-black small-heading" onclick="startPredicting()">Start
-            diagnosing</button>
-        <p class="font-default-offwhite small-heading margin-top-md text-center" id="result"></p>
-
-        <script>
-            ////////////////////////////////
-            ////////    SPECIFY PARAMETERS
-            ////////////////////////////////
-            const PROCESSING_SPEED = 2000;
-            const CLASSES =  [   "coffee Hemileia vastatrix" ,  "coffee Sooty mould" ,  "Colletotrichum kahawae" ,  "fungus Verticillium lecanii" ,  "Normal coffee bean" ,  ] ;
-            const MODEL_FOLDER = '/model/model.json';
-            const mode = 'environment' // back camera
-            const camera_mode = 'user' // front camera
-            const flag = true;
-
-            let currentStream;
-
-            ////////////////////////////////
-            ////////    USE THIS FUNCTION FOR INTERACTIONS
-            ////////////////////////////////
-            function interaction(predictedClass, classScores) {
-                console.log(classScores);
-                document.getElementById("result").innerHTML = `Prediction: ${predictedClass}, Confidence: ${classScores[0]}`;
-
-                localStorage.setItem('predictedClass', predictedClass);
-            }
-
-            ////////////////////////////////
-            ////////    VIDEO CAPTURE AND PREDICTION LOGIC
-            ////////////////////////////////
-            async function startVideo(facingMode = 'user') {
-                // Stop any existing video tracks to free up the camera
-                if (currentStream) {
-                    currentStream.getTracks().forEach(track => {
-                        track.stop();
-                    });
-                }
-
-                try {
-                    // Request access to the camera with the specified facing mode
-                    const stream = await navigator.mediaDevices.getUserMedia({
-                        video: { facingMode }
-                    });
-
-                    const videoElement = document.getElementById('video');
-                    videoElement.srcObject = stream;
-                    currentStream = stream;
-
-                    // Return a promise that resolves when the video is ready to play
-                    return new Promise(resolve => {
-                        videoElement.onloadedmetadata = () => {
-                            resolve(videoElement);
-                        };
-                    });
-                } catch (err) {
-                    console.error('Error accessing the camera:', err);
-                }
-            }
-
-
-            async function startPredicting() {
-                const model = await tf.loadGraphModel(MODEL_FOLDER);
-                setInterval(async () => {
-                    const example = tf.browser.fromPixels(video).cast('float32');
-                    const prediction = await model.predict(example.expandDims());
-                    const classScores = await prediction.data();
-                    const maxScoreId = classScores.indexOf(Math.max(...classScores));
-                    const predictedClass = CLASSES[maxScoreId];
-
-                    interaction(predictedClass, classScores);
-
-                    if (predictedClass === "coffee Hemileia vastatrix") {
-                        setTimeout(() => {
-                            window.location.href = "../outcome/outcome.html";
-                        }, 2000);
-                        localStorage.setItem('description', "Hemileia vastatrix is a multicellular basidiomycete fungus of the order Pucciniales (previously also known as Uredinales) that causes coffee leaf rust (CLR), a disease affecting the coffee plant. Coffee serves as the obligate host of coffee rust, that is, the rust must have access to and come into physical contact with coffee (Coffea sp.) in order to survive.");
-                    }
-                    if (predictedClass === "coffee Sooty mould") {
-                        setTimeout(() => {
-                            window.location.href = "../outcome/outcome.html";
-                        }, 2000);
-                        localStorage.setItem('description', "Sooty mold (also spelled sooty mould) is a collective term for different Ascomycete fungi, which includes many genera, commonly Cladosporium and Alternaria. It grows on plants and their fruit, but also environmental objects, like fences, garden furniture, stones, and even cars. The mold benefits from either a sugary exudate produced by the plant or fruit, or honeydew-secreting insects or sap suckers the plant may be infested by.");
-                    }
-                    if (predictedClass === "Colletotrichum kahawae") {
-                        setTimeout(() => {
-                            window.location.href = "../outcome/outcome.html";
-                        }, 2000);
-                        localStorage.setItem('description', "Colletotrichum kahawae is a fungal plant pathogen that causes coffee berry disease (CBD) on Coffea arabica crops. The pathogen is an ascomycete that reproduces asexually. The asexual spores (conidia) are stored within acervuli. This disease is considered to be one of the major factors hampering C.arabica production in the African continent, which represents the current geographic range of the fungus.");
-                    }
-                    if (predictedClass === "fungus Verticillium lecanii") {
-                        setTimeout(() => {
-                            window.location.href = "../outcome/outcome.html";
-                        }, 2000);
-                        localStorage.setItem('description', "Lecanicillium lecanii is now an approved name of an entomopathogenic fungus species, that was previously widely known as Verticillium lecanii (Zimmerman) Viegas), but is now understood to be an anamorphic form in the Cordyceps group of genera in the Clavicipitaceae.");
-                    }
-                }, PROCESSING_SPEED);
-            }
-
-            function switchCamera() {
-                if (currentStream) {
-                    currentStream.getTracks().forEach(track => track.stop());
-                }if(this.flag = true){
-                    startVideo(mode);
-                    this.flag = !this.flag;
-                }if(this.flag = false){
-                    startVideo(camera_mode);
-                    this.flag = !this.flag;
-                }
-                
-            }
-
-            document.addEventListener("DOMContentLoaded", function () {
-                startVideo(camera_mode);
-            });
-        </script>
+        </div>
     </div>
+        <div class="container scanning_content">
+            <!-- <h2 class="font-default-offwhite large-heading margin-top-xl">HAT OR NOT???</h2> -->
+
+            <video class="video margin-top-xl" id="video" autoplay playsinline></video>
+            <button class="changeCamera" onclick="switchCamera()">Switch Camera</button>
+            <button class="startPredict font-default-black small-heading" onclick="startPredicting()">Start
+                diagnosing</button>
+            <p class="font-default-offwhite small-heading margin-top-md text-center" id="result"></p>
+
+            <script>
+                ////////////////////////////////
+                ////////    SPECIFY PARAMETERS
+                ////////////////////////////////
+                const PROCESSING_SPEED = 2000;
+                const CLASSES = ["coffee Hemileia vastatrix", "coffee Sooty mould", "Colletotrichum kahawae", "fungus Verticillium lecanii", "Normal coffee bean",];
+                const MODEL_FOLDER = '/model/model.json';
+                const mode = 'environment' // back camera
+                const camera_mode = 'user' // front camera
+                const flag = true;
+
+                let currentStream;
+
+                ////////////////////////////////
+                ////////    USE THIS FUNCTION FOR INTERACTIONS
+                ////////////////////////////////
+                function interaction(predictedClass, classScores) {
+                    console.log(classScores);
+                    document.getElementById("result").innerHTML = `Prediction: ${predictedClass}, Confidence: ${classScores[0]}`;
+
+                    localStorage.setItem('predictedClass', predictedClass);
+                }
+
+                ////////////////////////////////
+                ////////    VIDEO CAPTURE AND PREDICTION LOGIC
+                ////////////////////////////////
+                async function startVideo(facingMode = 'user') {
+                    // Stop any existing video tracks to free up the camera
+                    if (currentStream) {
+                        currentStream.getTracks().forEach(track => {
+                            track.stop();
+                        });
+                    }
+
+                    try {
+                        // Request access to the camera with the specified facing mode
+                        const stream = await navigator.mediaDevices.getUserMedia({
+                            video: { facingMode }
+                        });
+
+                        const videoElement = document.getElementById('video');
+                        videoElement.srcObject = stream;
+                        currentStream = stream;
+
+                        // Return a promise that resolves when the video is ready to play
+                        return new Promise(resolve => {
+                            videoElement.onloadedmetadata = () => {
+                                resolve(videoElement);
+                            };
+                        });
+                    } catch (err) {
+                        console.error('Error accessing the camera:', err);
+                    }
+                }
+
+
+                async function startPredicting() {
+                    const model = await tf.loadGraphModel(MODEL_FOLDER);
+                    setInterval(async () => {
+                        const example = tf.browser.fromPixels(video).cast('float32');
+                        const prediction = await model.predict(example.expandDims());
+                        const classScores = await prediction.data();
+                        const maxScoreId = classScores.indexOf(Math.max(...classScores));
+                        const predictedClass = CLASSES[maxScoreId];
+
+                        interaction(predictedClass, classScores);
+
+                        if (predictedClass === "coffee Hemileia vastatrix") {
+                            setTimeout(() => {
+                                window.location.href = "../outcome/outcome.html";
+                            }, 2000);
+                            localStorage.setItem('description', "Hemileia vastatrix is a multicellular basidiomycete fungus of the order Pucciniales (previously also known as Uredinales) that causes coffee leaf rust (CLR), a disease affecting the coffee plant. Coffee serves as the obligate host of coffee rust, that is, the rust must have access to and come into physical contact with coffee (Coffea sp.) in order to survive.");
+                        }
+                        if (predictedClass === "coffee Sooty mould") {
+                            setTimeout(() => {
+                                window.location.href = "../outcome/outcome.html";
+                            }, 2000);
+                            localStorage.setItem('description', "Sooty mold (also spelled sooty mould) is a collective term for different Ascomycete fungi, which includes many genera, commonly Cladosporium and Alternaria. It grows on plants and their fruit, but also environmental objects, like fences, garden furniture, stones, and even cars. The mold benefits from either a sugary exudate produced by the plant or fruit, or honeydew-secreting insects or sap suckers the plant may be infested by.");
+                        }
+                        if (predictedClass === "Colletotrichum kahawae") {
+                            setTimeout(() => {
+                                window.location.href = "../outcome/outcome.html";
+                            }, 2000);
+                            localStorage.setItem('description', "Colletotrichum kahawae is a fungal plant pathogen that causes coffee berry disease (CBD) on Coffea arabica crops. The pathogen is an ascomycete that reproduces asexually. The asexual spores (conidia) are stored within acervuli. This disease is considered to be one of the major factors hampering C.arabica production in the African continent, which represents the current geographic range of the fungus.");
+                        }
+                        if (predictedClass === "fungus Verticillium lecanii") {
+                            setTimeout(() => {
+                                window.location.href = "../outcome/outcome.html";
+                            }, 2000);
+                            localStorage.setItem('description', "Lecanicillium lecanii is now an approved name of an entomopathogenic fungus species, that was previously widely known as Verticillium lecanii (Zimmerman) Viegas), but is now understood to be an anamorphic form in the Cordyceps group of genera in the Clavicipitaceae.");
+                        }
+                    }, PROCESSING_SPEED);
+                }
+
+                function switchCamera() {
+                    if (currentStream) {
+                        currentStream.getTracks().forEach(track => track.stop());
+                    } if (this.flag = true) {
+                        startVideo(mode);
+                        this.flag = !this.flag;
+                    } if (this.flag = false) {
+                        startVideo(camera_mode);
+                        this.flag = !this.flag;
+                    }
+
+                }
+
+                document.addEventListener("DOMContentLoaded", function () {
+                    startVideo(camera_mode);
+                });
+            </script>
+        </div>
+        <div class="spacingDiv"></div>
 </body>
 
 </html>

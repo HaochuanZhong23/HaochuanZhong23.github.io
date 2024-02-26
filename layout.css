@@ -56,6 +56,10 @@ body{
 }
 
 /* ---------------Spacing---------------- */
+.spacingDiv{
+  height: 2.5rem;
+}
+
 /* bottom */
 .margin-bottom-xl{
   margin-bottom: 6rem;
