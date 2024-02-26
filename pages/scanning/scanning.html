@@ -133,7 +133,7 @@
                     currentStream.getTracks().forEach(track => track.stop());
                 }if(this.flag = true){
                     startVideo(mode);
-                    flag = !flag;
+                    this.flag = !this.flag;
                 }if(this.flag = false){
                     startVideo("user");
                     this.flag = !this.flag;
