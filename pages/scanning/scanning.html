@@ -43,6 +43,7 @@
             const MODEL_FOLDER = '/model/model.json';
             const mode = 'environment' // back camera
             const camera_mode = 'user' // front camera
+            const flag = true;
 
             let currentStream;
 
@@ -130,8 +131,14 @@
             function switchCamera() {
                 if (currentStream) {
                     currentStream.getTracks().forEach(track => track.stop());
+                }if(flag = true){
+                    startVideo(mode);
+                    flag = false;
+                }if(flag = false){
+                    startVideo(camera_mode);
+                    flag = true;
                 }
-                startVideo(mode);
+                
             }
 
             document.addEventListener("DOMContentLoaded", function () {
