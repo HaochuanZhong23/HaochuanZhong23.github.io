@@ -1,0 +1,30 @@
+.outcomeImage{
+    max-width: 80%;
+}
+
+.outcome-wrapper{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+
+.progress-bar { 
+    width: 100%; 
+    background: #333;
+    border-radius: 10px;
+    padding: 3px;
+}
+
+.progress { 
+    width: 30%;
+    background: orange;
+    height: 20px;
+    border-radius: 7px;
+    transition: width 0.5s ease-in-out;
+}
+
+.remStyle {
+    text-decoration: none;
+}
+

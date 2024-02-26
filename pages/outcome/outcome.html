@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Outcome</title>
+    <!-- Styles -->
+    <link rel="stylesheet" href="/layout.css" type="text/css">
+    <link rel="stylesheet" href="/pages/outcome/outcome.css" type="text/css">
+    <!-- Javascript -->
+    <script src="/script.js"></script>
+</head>
+
+<body>
+    <div class="navFlex">
+        <div class="navbar ">
+            <a style="text-decoration:none; color: inherit" href="../scanning/scanning.html" class="icon icon-left flex-left"><img src="../../dock/back.png"><h4 class="margin-left-sm">Rescan</h4></a>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="outcome-wrapper margin-top-md">
+            <h2 id="disease" class="font-default-offwhite extra-large-heading outcome-heading">Hemileia Vastatrix</h2>
+            <img class="outcomeImage margin-top-sm" src="/assets/outcome/Hemileia Vastatrix.png"></img>
+        </div>
+
+        <p class="small-heading font-default-offwhite margin-top-md">Early stage</p>
+
+        <div class="progress-bar margin-top-xs"> <div id="progress" class="progress"></div></div>
+
+        <p id="description" class="running-text font-default-offwhite margin-top-sm"></p>
+
+
+        <div class="button-wrapper margin-top-md">
+            <button onclick="window.location.href='/pages/chat/chat.html'" class="btn-offwhite margin-top-sm">Potential Harms</button>
+            <button onclick="window.location.href='/pages/chat/chat.html'" class="btn-offwhite margin-top-sm">Solution</button>
+            <button onclick="window.location.href='/pages/chat/chat.html'" class="btn-offwhite margin-top-sm margin-bottom-md">More Information</button>
+            <a class="btn-link font-default-offwhite" href="/pages/feedback/feedback.html">Something goes wrong?</a>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            // Retrieve predictedClass from local storage
+            const predictedClass = localStorage.getItem('predictedClass');
+
+            // Update the text in the h2 element
+            const h2Element = document.getElementById('disease');
+            if (h2Element && predictedClass) {
+                h2Element.textContent = predictedClass;
+            } else {
+                console.error('Failed to update h2 text: predictedClass not found in local storage or h2 element not found.');
+            }
+
+            // Retrieve description from local storage
+            const description = localStorage.getItem('description');
+
+            // Update the text in the p element
+            const pElement = document.getElementById('description');
+            if (pElement && description) {
+                pElement.textContent = description;
+            } else {
+                console.error('Failed to update h2 text: predictedClass not found in local storage or h2 element not found.');
+            }
+        });
+    </script>
+</body>
+
+</html>

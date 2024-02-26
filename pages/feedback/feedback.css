@@ -1,0 +1,17 @@
+.feedbackImage{
+    max-width: 80%;
+}
+
+.feedback-wrapper{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.button-wrapper{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
