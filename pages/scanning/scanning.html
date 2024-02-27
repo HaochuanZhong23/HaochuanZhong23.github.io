@@ -44,7 +44,7 @@
                 const mode = 'environment' // back camera
                 const camera_mode = 'user' // front camera
                 const current_mode = null;
-                const flag = true;
+                let flag = true;
 
                 let currentStream;
 
@@ -130,25 +130,23 @@
                 }
 
                 function switchCamera() {
+                    // Ensure any current stream is stopped.
                     if (currentStream) {
                         currentStream.getTracks().forEach(track => track.stop());
                     } else {
-                        console.log("No Stream")
-                    } 
-                    if (this.flag == true) {
-                        console.log("Switched from true flag");
-                        startVideo(mode);
-                        current_mode = mode;
-                        this.flag = !this.flag;
-                        
-                    } else if (this.flag == false) {
-                        console.log("Switched from false flag");
-                        startVideo(camera_mode);
-                        current_mode = camera_mode;
-                        this.flag = !this.flag;
-                        
+                        console.log("No Stream");
                     }
 
+                    // Check the current state of the flag and switch the camera accordingly.
+                    if (flag) { // If flag is true, switch to 'environment' mode.
+                        startVideo(mode);
+                        flag = !flag; // Toggle the flag
+                        console.log("Switched to back camera");
+                    } else { // Otherwise, switch to 'user' mode.
+                        startVideo(camera_mode);
+                        flag = !flag; // Toggle the flag
+                        console.log("Switched to front camera");
+                    }
                 }
 
                 document.addEventListener("DOMContentLoaded", function () {
@@ -157,6 +155,6 @@
             </script>
         </div>
         <div class="spacingDiv"></div>
-</body>
+    </body>
 
 </html>
