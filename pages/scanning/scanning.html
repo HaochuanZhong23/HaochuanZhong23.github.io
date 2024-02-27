@@ -73,7 +73,7 @@
                     try {
                         // Request access to the camera with the specified facing mode
                         let stream = await navigator.mediaDevices.getUserMedia({
-                            video: { current_mode }
+                            video: { facingMode: current_mode }
                         });
 
                         let videoElement = document.getElementById('video');
