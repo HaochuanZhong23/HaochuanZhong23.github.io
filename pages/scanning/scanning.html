@@ -62,6 +62,7 @@
                 ////////    VIDEO CAPTURE AND PREDICTION LOGIC
                 ////////////////////////////////
                 async function startVideo() {
+                    console.log(current_mode);
                     // Stop any existing video tracks to free up the camera
                     if (currentStream) {
                         currentStream.getTracks().forEach(track => {
@@ -136,21 +137,27 @@
                     } else {
                         console.log("No Stream");
                     }
-
-                    // Check the current state of the flag and switch the camera accordingly.
-                    if (flag) { // If flag is true, switch to 'environment' mode.
-                        startVideo(mode);
-                        flag = !flag; // Toggle the flag
-                        console.log("Switched to back camera");
-                    } else { // Otherwise, switch to 'user' mode.
-                        startVideo(camera_mode);
-                        flag = !flag; // Toggle the flag
-                        console.log("Switched to front camera");
+                    if(current_mode == 'user') {
+                        current_mode = 'environment';
+                    } else {
+                        current_mode = 'user';
                     }
+                    startVideo(current_mode);
+                    // Check the current state of the flag and switch the camera accordingly.
+                    // if (flag) { // If flag is true, switch to 'environment' mode.
+                    //     startVideo(current);
+                    //     flag = !flag; // Toggle the flag
+                    //     console.log("Switched to back camera");
+                    // } else { // Otherwise, switch to 'user' mode.
+                    //     startVideo(camera_mode);
+                    //     flag = !flag; // Toggle the flag
+                    //     console.log("Switched to front camera");
+                    // }
                 }
 
                 document.addEventListener("DOMContentLoaded", function () {
                     startVideo(current_mode);
+                    console.log("Refresh");
                 });
             </script>
         </div>
