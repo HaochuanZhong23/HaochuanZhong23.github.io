@@ -43,6 +43,7 @@
                 const MODEL_FOLDER = '/model/model.json';
                 const mode = 'environment' // back camera
                 const camera_mode = 'user' // front camera
+                const current_mode = null;
                 const flag = true;
 
                 let currentStream;
@@ -60,7 +61,7 @@
                 ////////////////////////////////
                 ////////    VIDEO CAPTURE AND PREDICTION LOGIC
                 ////////////////////////////////
-                async function startVideo(facingMode = 'user') {
+                async function startVideo() {
                     // Stop any existing video tracks to free up the camera
                     if (currentStream) {
                         currentStream.getTracks().forEach(track => {
@@ -71,7 +72,7 @@
                     try {
                         // Request access to the camera with the specified facing mode
                         const stream = await navigator.mediaDevices.getUserMedia({
-                            video: { facingMode }
+                            video: { current_mode }
                         });
 
                         const videoElement = document.getElementById('video');
@@ -131,18 +132,27 @@
                 function switchCamera() {
                     if (currentStream) {
                         currentStream.getTracks().forEach(track => track.stop());
-                    } if (this.flag = true) {
+                    } else {
+                        console.log("No Stream")
+                    } 
+                    if (this.flag == true) {
+                        console.log("Switched from true flag");
                         startVideo(mode);
+                        current_mode = mode;
                         this.flag = !this.flag;
-                    } if (this.flag = false) {
+                        
+                    } else if (this.flag == false) {
+                        console.log("Switched from false flag");
                         startVideo(camera_mode);
+                        current_mode = camera_mode;
                         this.flag = !this.flag;
+                        
                     }
 
                 }
 
                 document.addEventListener("DOMContentLoaded", function () {
-                    startVideo(camera_mode);
+                    startVideo(current_mode);
                 });
             </script>
         </div>
