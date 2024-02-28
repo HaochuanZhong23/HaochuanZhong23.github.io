@@ -55,7 +55,7 @@
                     
                     console.log(classScores);
                     document.getElementById("result").innerHTML = `Prediction: ${predictedClass}, Confidence: ${classScores[0]}`;
-
+                    localStorage.setItem('predictedClass', predictedClass);
                     
                 }
 
@@ -102,7 +102,6 @@
                         const classScores = await prediction.data();
                         const maxScoreId = classScores.indexOf(Math.max(...classScores));
                         let predictedClass = CLASSES[maxScoreId];
-                        localStorage.setItem('predictedClass', predictedClass);
                         interaction(predictedClass, classScores);
                         
                         
